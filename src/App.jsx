@@ -185,7 +185,7 @@ const App = () => {
     };
 
     const timeZone = async (longitude, latitude) => {
-        const timezoneUrl = `http://api.timezonedb.com/v2.1/get-time-zone?key=${
+        const timezoneUrl = `https://api.timezonedb.com/v2.1/get-time-zone?key=${
             import.meta.env.VITE_TIMEZONE_API_KEY
         }format=json&by=position&lat=${latitude}&lng=${longitude}`;
 
