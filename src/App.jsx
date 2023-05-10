@@ -27,7 +27,6 @@ const App = () => {
         loadForecastData();
     }, []);
 
-    
     useEffect(() => {
         const fetchPopCitiesTemp = () => {
             const newPopCities = [];
@@ -141,8 +140,6 @@ const App = () => {
     };
 
     const forecast = async (longitude, latitude) => {
-        console.log(import.meta.env.VITE_FORECAST_API_KEY);
-
         const forecastUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${encodeURIComponent(
             latitude
         )}&lon=${encodeURIComponent(longitude)}&units=metric&appid=${
