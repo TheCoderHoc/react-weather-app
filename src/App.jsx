@@ -12,6 +12,7 @@ import haze from "./assets/images/haze.jpg";
 import mist from "./assets/images/mist.jpg";
 import lightRain from "./assets/images/light-rain.jpg";
 import fewClouds from "./assets/images/few-clouds.jpg";
+import smoke from "./assets/images/smoke.jpg";
 
 const App = () => {
     const [weather, setWeather] = useState({});
@@ -79,33 +80,39 @@ const App = () => {
             time,
         });
 
+        let bgImage;
+
         if (
             description === "thunderstorm" ||
             description === "thunderstorm with light rain"
         ) {
-            setImageSrc(thunderStorm);
+            bgImage = thunderStorm;
         } else if (description === "scattered clouds") {
-            setImageSrc(scatteredClouds);
+            bgImage = scatteredClouds;
         } else if (description === "broken clouds") {
-            setImageSrc(brokenClouds);
+            bgImage = brokenClouds;
         } else if (description === "overcast clouds") {
-            setImageSrc(overcastClouds);
+            bgImage = overcastClouds;
         } else if (description === "clear sky") {
-            setImageSrc(clearSky);
+            bgImage = clearSky;
         } else if (description === "haze") {
-            setImageSrc(haze);
+            bgImage = haze;
         } else if (description === "mist") {
-            setImageSrc(mist);
+            bgImage = mist;
         } else if (
             description === "light rain" ||
             description === "moderate rain"
         ) {
-            setImageSrc(lightRain);
+            bgImage = lightRain;
         } else if (description === "few clouds") {
-            setImageSrc(fewClouds);
+            bgImage = fewClouds;
+        } else if (description === "smoke") {
+            bgImage = smoke;
         } else {
-            setImageSrc("");
+            bgImage = "";
         }
+
+        setImageSrc(bgImage);
 
         setLoading(false);
     };
