@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
 import { GoSearch } from "react-icons/go";
 import WeatherDetail from "./WeatherDetail";
@@ -23,10 +23,34 @@ const App = () => {
     const [imageSrc, setImageSrc] = useState("");
 
     const [popCities, setPopCities] = useState(popularCities);
+    const [recentSearch, setRecentSearch] = useState([]);
+
+    const mounted = useRef(true);
 
     useEffect(() => {
+        // LOAD FORECAST DATA FOR DEFAULT LOCATION WHICH IS LAGOS
         loadForecastData();
+
+        // LOAD RECENT SEARCH DATA FROM SESSION STORAGE
+        const storedSearch = sessionStorage.getItem("recentSearch");
+
+        if (storedSearch) {
+            setRecentSearch(JSON.parse(storedSearch));
+        }
     }, []);
+
+    useEffect(() => {
+        // SAVE RECENT SEARCH TO SESSION STORAGE EACH TIME A SEARCH OCCURS
+
+        if (mounted.current) {
+            mounted.current = false;
+        } else {
+            sessionStorage.setItem(
+                "recentSearch",
+                JSON.stringify(recentSearch)
+            );
+        }
+    }, [recentSearch]);
 
     useEffect(() => {
         const fetchPopCitiesTemp = () => {
@@ -55,6 +79,7 @@ const App = () => {
 
     const loadForecastData = async (address = "Lagos") => {
         const { longitude, latitude, placeName } = await geocode(address);
+
         const {
             temp,
             clouds,
@@ -115,6 +140,8 @@ const App = () => {
         setImageSrc(bgImage);
 
         setLoading(false);
+
+        return temp;
     };
 
     const geocode = async (address) => {
@@ -218,7 +245,9 @@ const App = () => {
 
         setLoading(true);
 
-        loadForecastData(locationInput);
+        const temp = await loadForecastData(locationInput);
+
+        setRecentSearch([...recentSearch, { city: locationInput, temp }]);
 
         setLocationInput("");
     };
@@ -342,6 +371,30 @@ const App = () => {
                                     </span>
                                 </li>
                             ))}
+                        </ul>
+                    </div>
+
+                    <div className="recent-search">
+                        <h2 className="sidebar-sub-header">Recent Search</h2>
+
+                        <ul className="recent-search-items">
+                            {recentSearch.length !== 0 ? (
+                                recentSearch
+                                    .slice(-5)
+                                    .reverse()
+                                    .map(({ city, temp }, index) => (
+                                        <li key={index}>
+                                            <h3>{city}</h3>
+                                            <span className="city-temp">
+                                                {temp} &#176;C
+                                            </span>
+                                        </li>
+                                    ))
+                            ) : (
+                                <p className="recent-search-empty-text">
+                                    Your search history is empty.
+                                </p>
+                            )}
                         </ul>
                     </div>
                 </aside>

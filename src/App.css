@@ -202,11 +202,11 @@ ul {
     font-size: 1.6rem;
 }
 
-.sidebar .popular-locations-items {
+.sidebar .popular-locations-items, .sidebar .recent-search {
     margin-top: 1rem;
 }
 
-.popular-locations-items li {
+.popular-locations-items li, .recent-search-items li {
     align-items: center;
     cursor: pointer;
     display: flex;
@@ -216,17 +216,22 @@ ul {
     transition: 0.5s;
 }
 
-.popular-locations-items li:hover {
+.popular-locations-items li:hover, .recent-search-items li:hover {
     background-color: grey;
 }
 
-.popular-locations-items li h3 {
+.popular-locations-items li h3, .recent-search-items li h3 {
     font-weight: normal;
     font-size: 1.6rem;
 }
 
-.popular-locations-items li .city-temp {
+.popular-locations-items li .city-temp, .recent-search-items li .city-temp {
     font-size: 1.6rem;
+}
+
+.recent-search-empty-text {
+    font-size: 1.45rem;
+    padding: 1rem 0 1rem 2.5rem;
 }
 
 @media (max-width: 1200px) {
@@ -296,5 +301,4 @@ ul {
     .overlay{
         font-size: 2rem;
     }
-
 }
