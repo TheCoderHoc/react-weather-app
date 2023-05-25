@@ -41,7 +41,6 @@ const App = () => {
 
     useEffect(() => {
         // SAVE RECENT SEARCH TO SESSION STORAGE EACH TIME A SEARCH OCCURS
-
         if (mounted.current) {
             mounted.current = false;
         } else {
